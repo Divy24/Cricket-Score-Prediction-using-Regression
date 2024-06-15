@@ -1,18 +1,46 @@
-# IPL-Score-Predictor
+# IPL Score Prediction
 
-- This is just another simple yet intresting project which can approximately predict an innings score based on the data from 2008-2017 IPL season.  
-- I tried training three models:  
- 1. Linear Regression  
- 2. Lasso  
- 3. Ridge  
-- and out of these surprisingly Linear regression was giving more realistic results.  
-- If you liked this project star this repo.  
-- This project is inspired by a similar project made by Anuj Vyas and tutorial by Krish Naik.  
-- I made some improvisations in his code like I totally removed the result page and showed the results on the same page.  
-- And also I took venue as a feature while training as I think that it ca really play a major role in predicting score.  
-- Deployed using Flask.  
-- Just run app.py and go to localhost to see the results.  
+## Project Description
 
-Do visit my blog for better explanations: https://machinelearningprojects.net/ipl-score-prediction/
+This project predicts the first innings score in IPL matches using machine learning techniques.
 
-![](ipl.gif)
+## Methods Used
+
+- Linear Regression
+- Ridge Regression
+- Flask web development
+
+
+## Components
+- Data Preprocessing:
+
+Data Cleaning: Cleaning and preprocessing IPL match data to ensure consistency and relevance. This includes removing unnecessary columns, filtering consistent teams and relevant stadiums, converting data types, and handling missing values.
+Feature Engineering: Creating new features or transforming existing ones to improve predictive performance. For instance, deriving features like runs scored and wickets taken in the last 5 overs.
+One-Hot Encoding: Converting categorical variables like venue and team names into numerical format for machine learning model compatibility.
+
+- Machine Learning Model:
+
+Ridge Regression: Using Ridge Regression, a linear regression model that incorporates regularization to prevent overfitting, to predict the first innings score. Hyperparameter tuning is performed using RandomizedSearchCV to find the optimal regularization parameter (alpha).
+Model Training and Evaluation: Splitting the dataset into training and testing sets, training the Ridge Regression model on the training data, and evaluating its performance using metrics like Mean Absolute Error (MAE), Mean Squared Error (MSE), Root Mean Squared Error (RMSE), and R-squared (R²) score.
+
+- Web Application Development:
+
+Flask: Utilizing Flask, a lightweight web framework for Python, to build the web application.
+HTML/CSS: Creating an HTML user interface (UI) styled with CSS for user interaction.
+JavaScript: Adding client-side validation using JavaScript to ensure form data integrity before submission.
+Deployment: Running the Flask app locally to serve predictions on the web interface.
+
+## How to Use
+
+1. Clone the repository.
+2. Set up Python environment with required dependencies.
+3. Run `app.py` to start the Flask web application.
+4. Access the web application in your browser.
+
+## Repository Structure
+
+- `app.py`: Flask web application script.
+- `data/`: Directory containing IPL dataset.
+- `models/`: Directory containing trained machine learning models.
+- `templates/`: HTML templates for web interface.
+- `static/`: CSS and JavaScript files for styling and interactivity.
