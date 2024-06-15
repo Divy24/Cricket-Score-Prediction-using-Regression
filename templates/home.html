@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>First Innings Score Predictor</title>
+    <link rel="shortcut icon" href="ipl.png">
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background-image: url('background.png'); /* Replace with a suitable IPL background image */
+            background-size: cover;
+            background-attachment: fixed;
+            margin: 0;
+            padding: 0;
+            color: #fff;
+        }
+
+        .container {
+            text-align: center;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.6);
+            margin: 50px auto;
+            border-radius: 10px;
+            max-width: 700px;
+        }
+
+        .container-heading {
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+
+        .description {
+            font-size: 1.2em;
+        }
+
+        .form-container {
+            margin-top: 20px;
+            background-color: rgba(255, 255, 255, 0.2);
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .form-input {
+            margin: 10px 0;
+            padding: 10px;
+            width: 90%;
+            max-width: 400px;
+            font-size: 1em;
+            border: none;
+            border-radius: 5px;
+        }
+
+        .myButton {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1em;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .myButton:hover {
+            background-color: #0056b3;
+        }
+
+        .error-message {
+            color: red;
+            font-size: 1.1em;
+        }
+
+        .prediction-result {
+            margin-top: 20px;
+            font-size: 1.3em;
+            color: #ffeb3b;
+        }
+    </style>
+    <script>
+        function validateForm() {
+            var battingTeam = document.forms["scoreForm"]["batting-team"].value;
+            var bowlingTeam = document.forms["scoreForm"]["bowling-team"].value;
+            var venue = document.forms["scoreForm"]["venue"].value;
+            var overs = document.forms["scoreForm"]["overs"].value;
+            var runs = document.forms["scoreForm"]["runs"].value;
+            var wickets = document.forms["scoreForm"]["wickets"].value;
+            var runs_in_prev_5 = document.forms["scoreForm"]["runs_in_prev_5"].value;
+            var wickets_in_prev_5 = document.forms["scoreForm"]["wickets_in_prev_5"].value;
+
+            if (battingTeam == "none" || bowlingTeam == "none" || venue == "none" || overs == "" || runs == "" || wickets == "" || runs_in_prev_5 == "" || wickets_in_prev_5 == "") {
+                document.getElementById('error-message').innerHTML = "You can't leave any field empty!!!";
+                return false;
+            }
+            if (battingTeam == bowlingTeam) {
+                document.getElementById('error-message').innerHTML = "Batting team and Bowling team can't be the same.";
+                return false;
+            }
+            return true;
+        }
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <h2 class='container-heading'>First Innings Score Predictor for Indian Premier League (IPL)</h2>
+        <div class='description'>
+            <p>A Machine Learning Web App, Built with Flask.</p>
+        </div>
+
+        <div class="form-container">
+            <form name="scoreForm" action="predict" method="POST" onsubmit="return validateForm()">
+                <select class="form-input" name="batting-team">
+                    <option value="none">--- Select a Batting team ---</option>
+                    <option value="Mumbai Indians">Mumbai Indians</option>
+                    <option value="Kolkata Knight Riders">Kolkata Knight Riders</option>
+                    <option value="Chennai Super Kings">Chennai Super Kings</option>
+                    <option value="Rajasthan Royals">Rajasthan Royals</option>
+                    <option value="Kings XI Punjab">Kings XI Punjab</option>
+                    <option value="Royal Challengers Bangalore">Royal Challengers Bangalore</option>
+                    <option value="Delhi Capitals">Delhi Capitals</option>
+                    <option value="Sunrisers Hyderabad">Sunrisers Hyderabad</option>
+                </select>
+
+                <select class="form-input" name="bowling-team">
+                    <option value="none">--- Select a Bowling team ---</option>
+                    <option value="Mumbai Indians">Mumbai Indians</option>
+                    <option value="Kolkata Knight Riders">Kolkata Knight Riders</option>
+                    <option value="Chennai Super Kings">Chennai Super Kings</option>
+                    <option value="Rajasthan Royals">Rajasthan Royals</option>
+                    <option value="Kings XI Punjab">Kings XI Punjab</option>
+                    <option value="Royal Challengers Bangalore">Royal Challengers Bangalore</option>
+                    <option value="Delhi Capitals">Delhi Capitals</option>
+                    <option value="Sunrisers Hyderabad">Sunrisers Hyderabad</option>
+                </select>
+
+                <select class="form-input" name="venue">
+                    <option value="none">--- Select a Venue ---</option>
+                    <option value="ACA-VDCA Stadium, Visakhapatnam">ACA-VDCA Stadium, Visakhapatnam</option>
+                    <option value="Barabati Stadium, Cuttack">Barabati Stadium, Cuttack</option>
+                    <option value="Dr DY Patil Sports Academy, Mumbai">Dr DY Patil Sports Academy, Mumbai</option>
+                    <option value="Dubai International Cricket Stadium, Dubai">Dubai International Cricket Stadium, Dubai</option>
+                    <option value="Eden Gardens, Kolkata">Eden Gardens, Kolkata</option>
+                    <option value="Feroz Shah Kotla, Delhi">Feroz Shah Kotla, Delhi</option>
+                    <option value="Himachal Pradesh Cricket Association Stadium, Dharamshala">Himachal Pradesh Cricket Association Stadium, Dharamshala</option>
+                    <option value="Holkar Cricket Stadium, Indore">Holkar Cricket Stadium, Indore</option>
+                    <option value="JSCA International Stadium Complex, Ranchi">JSCA International Stadium Complex, Ranchi</option>
+                    <option value="M Chinnaswamy Stadium, Bangalore">M Chinnaswamy Stadium, Bangalore</option>
+                    <option value="MA Chidambaram Stadium, Chepauk">MA Chidambaram Stadium, Chepauk</option>
+                    <option value="Maharashtra Cricket Association Stadium, Pune">Maharashtra Cricket Association Stadium, Pune</option>
+                    <option value="Punjab Cricket Association Stadium, Mohali">Punjab Cricket Association Stadium, Mohali</option>
+                    <option value="Raipur International Cricket Stadium, Raipur">Raipur International Cricket Stadium, Raipur</option>
+                    <option value="Rajiv Gandhi International Stadium, Uppal">Rajiv Gandhi International Stadium, Uppal</option>
+                    <option value="Sardar Patel Stadium, Motera">Sardar Patel Stadium, Motera</option>
+                    <option value="Sawai Mansingh Stadium, Jaipur">Sawai Mansingh Stadium, Jaipur</option>
+                    <option value="Sharjah Cricket Stadium, Sharjah">Sharjah Cricket Stadium, Sharjah</option>
+                    <option value="Sheikh Zayed Stadium, Abu-Dhabi">Sheikh Zayed Stadium, Abu-Dhabi</option>
+                    <option value="Wankhede Stadium, Mumbai">Wankhede Stadium, Mumbai</option>
+                </select>
+
+                <input class="form-input" type="text" name="overs" placeholder="Overs (>= 5.0) eg. 7.2">
+                <input class="form-input" type="text" name="runs" placeholder="Runs eg. 64">
+                <input class="form-input" type="text" name="wickets" placeholder="Wickets eg. 4">
+                <input class="form-input" type="text" name="runs_in_prev_5" placeholder="Runs scored in previous 5 Overs eg. 42">
+                <input class="form-input" type="text" name="wickets_in_prev_5" placeholder="Wickets taken in previous 5 Overs eg. 3">
+                <input type="submit" class="myButton" value="Predict Score">
+            </form>
+            <div id="error-message" class="error-message"></div>
+            <div class="prediction-result">{{ val }}</div>
+        </div>
+    </div>
+</body>
+
+</html>

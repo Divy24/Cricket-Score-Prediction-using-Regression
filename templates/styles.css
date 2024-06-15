@@ -1,0 +1,94 @@
+/* General styles for the body */
+body {
+    font-family: 'Open Sans', sans-serif;
+    background-image: url('background.png'); /* Replace with a suitable IPL background image */
+    background-size: cover;
+    background-attachment: fixed;
+    margin: 0;
+    padding: 0;
+    color: #fff;
+}
+
+/* Container styling */
+.container {
+    text-align: center;
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.6);
+    margin: 50px auto;
+    border-radius: 10px;
+    max-width: 700px;
+}
+
+/* Heading styling */
+.container-heading {
+    font-size: 2em;
+    margin-bottom: 20px;
+}
+
+/* Description styling */
+.description {
+    font-size: 1.2em;
+}
+
+/* Form container styling */
+.form-container {
+    margin-top: 20px;
+    background-color: rgba(255, 255, 255, 0.2);
+    padding: 20px;
+    border-radius: 10px;
+}
+
+/* Form input styling */
+.form-input {
+    margin: 10px 0;
+    padding: 10px;
+    width: 90%;
+    max-width: 400px;
+    font-size: 1em;
+    border: none;
+    border-radius: 5px;
+}
+
+/* Button styling */
+.myButton {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.myButton:hover {
+    background-color: #0056b3;
+}
+
+/* Error message styling */
+.error-message {
+    color: red;
+    font-size: 1.1em;
+}
+
+/* Prediction result styling */
+.prediction-result {
+    margin-top: 20px;
+    font-size: 1.3em;
+    color: #ffeb3b;
+}
+
+/* Responsive design for mobile devices */
+@media (max-width: 768px) {
+    .container {
+        width: 90%;
+    }
+
+    .form-input {
+        width: 100%;
+    }
+
+    .myButton {
+        width: 100%;
+    }
+}
